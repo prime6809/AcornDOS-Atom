@@ -6,9 +6,11 @@
 # http://www.retrosoftware.co.uk/wiki/index.php?title=BeebAsm
 #
 
+include ../vars.mk
+
 # roms, Build 40 and 80 column variants of system roms with both 
 # floppy controllers
-all: ados40 ados80 ados-novdg ados1770-bc00 ados1770-eff0 gdos1770-bc00 gdos1770-eff0 sysinfo
+all: ados40 ados80 ados-novdg ados1770-bc00 ados1770-eff0 gdos1770-bc00 gdos1770-eff0 sysinfo buildrom
 
 # roms 
 
@@ -37,6 +39,9 @@ sysinfo: $(ROMSRC) $(INCLUDES)
 	$(ASM) -i $(SRCPATH)/sysinfo.asm -D ATM=0 -D ISROM=1 -o sysinfoe0.rom -v > $(LIST)/sysinfo-rom.txt
 
 
+buildrom: ados1770-bc00 ados1770-eff0 gdos1770-bc00 gdos1770-eff0 sysinfo
+	sh build-rom.sh
+
 clean:
-	rm -f ados*.rom
+	rm -f ados*.rom gdos*.rom sysinfo*.rom fdc*.rom blank*.rom
 	
